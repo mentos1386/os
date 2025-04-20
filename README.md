@@ -1,9 +1,15 @@
 # `mentos1386/os`
 
-My "custom os" 🌸
+My very special OS 🌸🌺
 
 #### References:
  - https://github.com/DeterminateSystems/nix-installer/issues/1445#issuecomment-2816777981
+
+# Installation
+
+1. Install Bazzite.
+2. Once installed, switch to this os using `sudo bootc switch ghcr.io/mentos1386/os:latest`.
+3. Reboot 🐣
 
 # Prerequisites
 
