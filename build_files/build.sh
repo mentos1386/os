@@ -42,7 +42,7 @@ PACKAGES+=(
 dnf5 install -y "${PACKAGES[@]}"
 
 # Nix
-curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install --determinate --no-confirm
+curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install --determinate --no-confirm --no-start-daemon
 . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
 nix-channel --add https://nixos.org/channels/nixpkgs-unstable
 nix-channel --update
