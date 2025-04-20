@@ -1,13 +1,13 @@
 # `mentos1386/os`
 
-My very special OS 🌸🌺
+My very special OS 🌸🌺! Based on [Bazzite](https://bazzite.gg/) (Gnome).
 
 #### References:
  - https://github.com/DeterminateSystems/nix-installer/issues/1445#issuecomment-2816777981
 
 # Installation
 
-1. Install Bazzite.
+1. Install [Bazzite](https://bazzite.gg/).
 2. Once installed, switch to this os using `sudo bootc switch ghcr.io/mentos1386/os:latest`.
 3. Reboot 🐣
 
