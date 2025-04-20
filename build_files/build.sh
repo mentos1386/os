@@ -30,6 +30,12 @@ PACKAGES+=(
     ffmpeg
     ddcutil
 )
+
+# Tools
+PACKAGES+=(
+    kitty
+)
+
 # Docker
 PACKAGES+=(
     containerd.io
