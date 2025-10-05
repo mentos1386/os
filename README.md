@@ -1,6 +1,12 @@
 # `mentos1386/os`
 
-My very special OS 🌸🌺! Based on [Bazzite](https://bazzite.gg/) (Gnome).
+My very special OS 🌸🌺! Based on [Bazzite](https://bazzite.gg/).
+
+Currently supporting two versions:
+ - Deck for Gaming focuesed devices.
+    - `bootc switch ghcr.io/mentos1386/os-bazzite-deck-gnome:latest`
+ - Gnome for everything else.
+    - `bootc switch ghcr.io/mentos1386/os-bazzite-gnome:latest`
 
 #### References:
  - https://github.com/DeterminateSystems/nix-installer/issues/1445#issuecomment-2816777981
@@ -215,9 +221,9 @@ Once the workflow is done, you'll find it either in your S3 bucket or as part of
 
 This template comes with the necessary tooling to index your image on [artifacthub.io](https://artifacthub.io), use the `artifacthub-repo.yml` file at the root to verify yourself as the publisher. This is important to you for a few reasons:
 
-- The value of artifacthub is it's one place for people to index their custom images, and since we depend on each other to learn, it helps grow the community. 
+- The value of artifacthub is it's one place for people to index their custom images, and since we depend on each other to learn, it helps grow the community.
 - You get to see your pet project listed with the other cool projects in Cloud Native.
-- Since the site puts your README front and center, it's a good way to learn how to write a good README, learn some marketing, finding your audience, etc. 
+- Since the site puts your README front and center, it's a good way to learn how to write a good README, learn some marketing, finding your audience, etc.
 
 [Discussion thread](https://universal-blue.discourse.group/t/listing-your-custom-image-on-artifacthub/6446)
 
