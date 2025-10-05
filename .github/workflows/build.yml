@@ -14,7 +14,7 @@ on:
   workflow_dispatch:
 
 env:
-  IMAGE_NAME: "${{ github.event.repository.name }}"  # the name of the image produced by this build, matches repo names
+  IMAGE_PREFIX: "${{ github.event.repository.name }}"  # the name of the image produced by this build, matches repo names
   IMAGE_DESC: "My Customized Universal Blue Image"
   IMAGE_REGISTRY: "ghcr.io/${{ github.repository_owner }}"  # do not edit
   ARTIFACTHUB_LOGO_URL: "https://avatars.githubusercontent.com/u/120078124?s=200&v=4"  # You should put your own image here so that you get a fancy profile image on https://artifacthub.io/!
@@ -32,6 +32,9 @@ jobs:
       matrix:
         flavor: [bazzite-deck-gnome, bazzite-gnome]
         version: [42]
+
+    env:
+      IMAGE_NAME: ${{ env.IMAGE_PREFIX }}-${{ matrix.flavor }}
 
     permissions:
       contents: read
@@ -67,9 +70,9 @@ jobs:
           # This generates all the tags for your image, you can add custom tags here too!
           # By default, it should generate "latest" and "latest.(date here)".
           tags: |
-            type=raw,value=latest.${{ matrix.flavor }}.${{ matrix.version }}
-            type=raw,value=latest.${{ matrix.flavor }}.${{ matrix.version }}.{{date 'YYYYMMDD'}}
-            type=raw,value=${{ matrix.flavor }}.${{ matrix.version }}.{{date 'YYYYMMDD'}}
+            type=raw,value=latest
+            type=raw,value=latest.{{date 'YYYYMMDD'}}
+            type=raw,value={{date 'YYYYMMDD'}}
             type=sha,enable=${{ github.event_name == 'pull_request' }}
             type=ref,event=pr
           labels: |
