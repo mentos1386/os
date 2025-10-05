@@ -3,7 +3,7 @@ FROM scratch AS ctx
 COPY build_files /
 
 # Base Image
-FROM ghcr.io/ublue-os/bazzite-gnome:42
+FROM ghcr.io/ublue-os/bazzite-gnome-deck:42
 
 
 ### MODIFICATIONS
@@ -16,7 +16,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=tmpfs,dst=/tmp \
     /ctx/build.sh && \
     ostree container commit
-    
+
 ### LINTING
 ## Verify final image and contents are correct.
 RUN bootc container lint
