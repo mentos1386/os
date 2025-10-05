@@ -3,9 +3,9 @@ FROM scratch AS ctx
 COPY build_files /
 
 # Base Image
-ARG flavor
-ARG version
-FROM ghcr.io/ublue-os/${flavor}:${version}
+ARG FLAVOR
+ARG VERSION
+FROM ghcr.io/ublue-os/${FLAVOR}:${VERSION}
 
 
 ### MODIFICATIONS
