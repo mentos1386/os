@@ -3,7 +3,7 @@ FROM scratch AS ctx
 COPY build_files /
 
 # Base Image
-FROM ghcr.io/ublue-os/bazzite-gnome-deck:42
+FROM ghcr.io/ublue-os/bazzite-deck-gnome:42
 
 
 ### MODIFICATIONS
