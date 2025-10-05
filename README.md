@@ -14,7 +14,7 @@ Currently supporting two versions:
 # Installation
 
 1. Install [Bazzite](https://bazzite.gg/).
-2. Once installed, switch to this os using `sudo bootc switch ghcr.io/mentos1386/os:latest`.
+2. Once installed, switch to this os using (matching flavor) `sudo bootc switch ghcr.io/mentos1386/os-bazzite-gnome:latest`.
 3. Reboot 🐣
 
 # Prerequisites
