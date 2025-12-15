@@ -1,0 +1,189 @@
+{
+  "lockfile_version": "1",
+  "packages": {
+    "buildah@latest": {
+      "last_modified": "2025-12-05T06:24:47Z",
+      "resolved": "github:NixOS/nixpkgs/42e29df35be6ef54091d3a3b4e97056ce0a98ce8#buildah",
+      "source": "devbox-search",
+      "version": "1.42.1",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/q6w8fhzb8kmml251pkdg19ygwbpzif98-buildah-wrapper-1.42.1",
+              "default": true
+            },
+            {
+              "name": "man",
+              "path": "/nix/store/vyihr8ik7q85vnmbbvxnbsfmkrcd72bf-buildah-wrapper-1.42.1-man",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/q6w8fhzb8kmml251pkdg19ygwbpzif98-buildah-wrapper-1.42.1"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/84jj2n2hh0hh0380sv2h12zy7hlfj72s-buildah-wrapper-1.42.1",
+              "default": true
+            },
+            {
+              "name": "man",
+              "path": "/nix/store/xdk9r0w53bq018r4grjc0kycy14nsqjw-buildah-wrapper-1.42.1-man",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/84jj2n2hh0hh0380sv2h12zy7hlfj72s-buildah-wrapper-1.42.1"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/krljncvq8162jwkvga3m0rjmb203s173-buildah-wrapper-1.42.1",
+              "default": true
+            },
+            {
+              "name": "man",
+              "path": "/nix/store/d0wq5avnhwfv6lf24dxs6x71fw5q4z33-buildah-wrapper-1.42.1-man",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/krljncvq8162jwkvga3m0rjmb203s173-buildah-wrapper-1.42.1"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/4chi4csyr9raqf1ymwq4xqyi1av8r7ld-buildah-wrapper-1.42.1",
+              "default": true
+            },
+            {
+              "name": "man",
+              "path": "/nix/store/4j5zax7w19cp7j3dvhqq1c0nhm4nbi6s-buildah-wrapper-1.42.1-man",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/4chi4csyr9raqf1ymwq4xqyi1av8r7ld-buildah-wrapper-1.42.1"
+        }
+      }
+    },
+    "cosign@latest": {
+      "last_modified": "2025-11-23T21:50:36Z",
+      "resolved": "github:NixOS/nixpkgs/ee09932cedcef15aaf476f9343d1dea2cb77e261#cosign",
+      "source": "devbox-search",
+      "version": "3.0.2",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/vrgzybvc88lnk5834g57bvrbc0jq3zss-cosign-3.0.2",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/vrgzybvc88lnk5834g57bvrbc0jq3zss-cosign-3.0.2"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/rpyw41c1manmd2dmmlb4x3f8pkcxcixa-cosign-3.0.2",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/rpyw41c1manmd2dmmlb4x3f8pkcxcixa-cosign-3.0.2"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/yrbm2chbdxdpn88zmzk6xf9s7zy7zgls-cosign-3.0.2",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/yrbm2chbdxdpn88zmzk6xf9s7zy7zgls-cosign-3.0.2"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/xfdnz331h0kg9ypc3b2afq3bin1c1809-cosign-3.0.2",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/xfdnz331h0kg9ypc3b2afq3bin1c1809-cosign-3.0.2"
+        }
+      }
+    },
+    "skopeo@latest": {
+      "last_modified": "2025-12-04T04:58:45Z",
+      "resolved": "github:NixOS/nixpkgs/821f1a2ebab0f13d6d65170d6bd7d2b3a182efdb#skopeo",
+      "source": "devbox-search",
+      "version": "1.21.0",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/aklpljxcdygy8xaghks1hc3dhq30nk9l-skopeo-1.21.0",
+              "default": true
+            },
+            {
+              "name": "man",
+              "path": "/nix/store/cr6afggxrgag6v3s6jpkivcqn18s7nwn-skopeo-1.21.0-man",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/aklpljxcdygy8xaghks1hc3dhq30nk9l-skopeo-1.21.0"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/qk5n72d0srs1ry9bnjapl5zgw9xbhs5p-skopeo-1.21.0",
+              "default": true
+            },
+            {
+              "name": "man",
+              "path": "/nix/store/srg80syl2h6hd2x7hwanjq860w0icks3-skopeo-1.21.0-man",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/qk5n72d0srs1ry9bnjapl5zgw9xbhs5p-skopeo-1.21.0"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/pnxm6sgl21avch8cl1gjnjv77f04jjsx-skopeo-1.21.0",
+              "default": true
+            },
+            {
+              "name": "man",
+              "path": "/nix/store/6axk365079v7rq3m3kxbaxjagf2i7935-skopeo-1.21.0-man",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/pnxm6sgl21avch8cl1gjnjv77f04jjsx-skopeo-1.21.0"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/0l522kx74594ba2d0hnjbvi15k4nrnc9-skopeo-1.21.0",
+              "default": true
+            },
+            {
+              "name": "man",
+              "path": "/nix/store/8pn11prq2705cs5ypkw6ga609mx0s7x9-skopeo-1.21.0-man",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/0l522kx74594ba2d0hnjbvi15k4nrnc9-skopeo-1.21.0"
+        }
+      }
+    }
+  }
+}
