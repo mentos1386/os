@@ -15,8 +15,8 @@ on:
 
 env:
   IMAGE_DESC: "My Customized Universal Blue Image"
-  IMAGE_REGISTRY: "ghcr.io/${{ github.repository_owner }}"  # do not edit
-  ARTIFACTHUB_LOGO_URL: "https://avatars.githubusercontent.com/u/120078124?s=200&v=4"  # You should put your own image here so that you get a fancy profile image on https://artifacthub.io/!
+  IMAGE_REGISTRY: "code.tjo.space/${{ github.repository_owner }}"
+  ARTIFACTHUB_LOGO_URL: "https://code.tjo.space/user/settings#avatar-settings"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref || github.run_id }}-${{ inputs.brand_name}}-${{ inputs.stream_name }}
@@ -24,13 +24,13 @@ concurrency:
 
 jobs:
   build_push:
+    runs-on: ubuntu-latest
     name: Build and push image
-    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
         flavor: [bazzite-deck-gnome, bazzite-gnome]
-        version: [42]
+        version: [42, 43]
 
     env:
       IMAGE_NAME: "${{ github.event.repository.name }}-${{ matrix.flavor }}"
@@ -41,7 +41,6 @@ jobs:
       id-token: write
 
     steps:
-      # These stage versions are pinned by https://github.com/renovatebot/renovate
       - name: Checkout
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v4
 
@@ -75,13 +74,13 @@ jobs:
             type=sha,enable=${{ github.event_name == 'pull_request' }}
             type=ref,event=pr
           labels: |
-            io.artifacthub.package.readme-url=https://raw.githubusercontent.com/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}/refs/heads/main/README.md
+            io.artifacthub.package.readme-url=https://code.tjo.space/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}/raw/refs/heads/main/README.md
             org.opencontainers.image.created=${{ steps.date.outputs.date }}
             org.opencontainers.image.description=${{ env.IMAGE_DESC }}
-            org.opencontainers.image.documentation=https://raw.githubusercontent.com/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}/refs/heads/main/README.md
-            org.opencontainers.image.source=https://github.com/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}/blob/main/Containerfile
+            org.opencontainers.image.documentation=https://code.tjo.space/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}/raw/refs/heads/main/README.md
+            org.opencontainers.image.source=https://code.tjo.space/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}/src/branch/main/Containerfile
             org.opencontainers.image.title=${{ env.IMAGE_NAME }}
-            org.opencontainers.image.url=https://github.com/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}
+            org.opencontainers.image.url=https://code.tjo.space/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}
             org.opencontainers.image.vendor=${{ github.repository_owner }}
             org.opencontainers.image.version=latest
             io.artifacthub.package.deprecated=false
@@ -157,13 +156,13 @@ jobs:
         with:
           string: ${{ env.IMAGE_NAME }}
 
-      - name: Push To GHCR
+      - name: Push To code.tjo.space
         uses: redhat-actions/push-to-registry@5ed88d269cf581ea9ef6dd6806d01562096bee9c # v2
         if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
         id: push
         env:
           REGISTRY_USER: ${{ github.actor }}
-          REGISTRY_PASSWORD: ${{ github.token }}
+          REGISTRY_PASSWORD: ${{ secrets.PACKAGES_TOKEN }}
         with:
           registry: ${{ steps.registry_case.outputs.lowercase }}
           image: ${{ steps.image_case.outputs.lowercase }}
