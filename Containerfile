@@ -27,7 +27,6 @@ LABEL io.artifacthub.package.readme-url=https://code.tjo.space/mentos1386/os/raw
 LABEL org.opencontainers.image.description="My Customized Universal Blue Image"
 LABEL org.opencontainers.image.documentation=https://code.tjo.space/mentos1386/os/raw/refs/heads/main/README.md
 LABEL org.opencontainers.image.source=https://code.tjo.space/mentos1386/os/src/branch/main/Containerfile
-LABEL org.opencontainers.image.title=os
 LABEL org.opencontainers.image.url=https://code.tjo.space/mentos1386/os
 LABEL org.opencontainers.image.vendor=mentos1386
 LABEL io.artifacthub.package.deprecated=false

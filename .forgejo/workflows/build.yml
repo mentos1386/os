@@ -13,9 +13,6 @@ on:
       - '**/README.md'
   workflow_dispatch:
 
-env:
-  IMAGE_REGISTRY: "code.tjo.space/${{ github.repository_owner }}"
-
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref || github.run_id }}-${{ inputs.brand_name}}-${{ inputs.stream_name }}
   cancel-in-progress: true
@@ -31,7 +28,8 @@ jobs:
         version: [42, 43]
 
     env:
-      IMAGE_NAME: "${{ github.event.repository.name }}-${{ matrix.flavor }}"
+      IMAGE_NAME: "os-${{ matrix.flavor }}"
+      IMAGE_REGISTRY: "code.tjo.space/mentos1386"
 
     permissions:
       contents: read
@@ -56,10 +54,11 @@ jobs:
             --build-arg=FLAVOR=${{ matrix.flavor }} \
             --build-arg=VERSION=${{ matrix.version }} \
             --file Containerfile \
-            --tag raw-image-os \
-            --label "org.opencontainers.image.created=$(date -u +%Y\-%m\-%d\T%H\:%M\:%S\Z)"
-            --label "org.opencontainers.image.version=${{ github.ref_name }}"
-            --label "org.opencontainers.image.revision=${{ github.sha }}"
+            --tag ${{ env.IMAGE_NAME }} \
+            --label "org.opencontainers.image.created=$(date -u +%Y\-%m\-%d\T%H\:%M\:%S\Z)" \
+            --label "org.opencontainers.image.version=${{ github.ref_name }}" \
+            --label "org.opencontainers.image.revision=${{ github.sha }}" \
+            --label "org.opencontainers.image.title=${{ env.IMAGE_NAME }}"
 
       - name: Push image
         id: push
@@ -68,7 +67,7 @@ jobs:
           echo "${{ secrets.PACKAGES_TOKEN }}" | devbox run -- buildah login -u ${{ github.actor }} --password-stdin
           echo "${{ secrets.PACKAGES_TOKEN }}" | devbox run -- skopeo login -u ${{ github.actor }} --password-stdin
 
-          IMAGE="${{ env.IMAGE_REGISTRY }}/os"
+          IMAGE="${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}"
 
           echo "- Pushing image"
           devbox run -- buildah push raw-image-os docker://${IMAGE}:${{ github.sha }}
@@ -81,7 +80,7 @@ jobs:
       - name: Sign container image
         if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
         run: |
-          IMAGE_FULL="${{ env.IMAGE_REGISTRY }}/os"
+          IMAGE_FULL="${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}"
 
           for tag in latest latest.${{ date 'YYYMMDD' }} ${{ date 'YYYMMDD' }} ${{ github.ref_name }} ${{ github.sha }}; do
             devbox run -- cosign sign -y --key env://COSIGN_PRIVATE_KEY $IMAGE_FULL:$tag
