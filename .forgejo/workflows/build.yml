@@ -45,13 +45,15 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.NIX_GITHUB_TOKEN }}
         with:
-          enable-cache: false
+          enable-cache: true
           github-token: "${{ secrets.NIX_GITHUB_TOKEN }}"
 
       - name: Build Image
         run: |
           set -x
-          sudo podman image trust set --type accept default
+          mkdir -p /root/.config/containers
+          echo '{ "default": [{ "type": "insecureAcceptAnything" }] }' > /root/.config/containers/policy.json
+
           devbox run -- buildah build \
             --file Containerfile \
             --build-arg FLAVOR=${{ matrix.flavor }} \
