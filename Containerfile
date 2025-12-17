@@ -1,10 +1,11 @@
+ARG FLAVOR
+ARG VERSION
+
 # Allow build scripts to be referenced without being copied into the final image
 FROM scratch AS ctx
 COPY build_files /
 
 # Base Image
-ARG FLAVOR
-ARG VERSION
 FROM ghcr.io/ublue-os/${FLAVOR}:${VERSION}
 
 

@@ -117,6 +117,10 @@
         }
       }
     },
+    "github:NixOS/nixpkgs/nixpkgs-unstable": {
+      "last_modified": "2025-11-20T06:07:48Z",
+      "resolved": "github:NixOS/nixpkgs/a8d610af3f1a5fb71e23e08434d8d61a466fc942?lastModified=1763618868&narHash=sha256-v5afmLjn%2FuyD9EQuPBn7nZuaZVV9r%2BJerayK%2F4wvdWA%3D"
+    },
     "skopeo@latest": {
       "last_modified": "2025-12-04T04:58:45Z",
       "resolved": "github:NixOS/nixpkgs/821f1a2ebab0f13d6d65170d6bd7d2b3a182efdb#skopeo",
