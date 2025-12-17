@@ -96,7 +96,13 @@ jobs:
 
       - name: Build Image
         run: |
-          export BUILDAH_ISOLATION=chroot
+          echo devbox run -- buildah build \
+            --build-arg=FLAVOR=${{ matrix.flavor }} \
+            --build-arg=VERSION=${{ matrix.version }} \
+            --file Containerfile \
+            --tag ${{ env.IMAGE_NAME }} \
+            --label ${{ steps.metadata.outputs.labels }}
+
           devbox run -- buildah build \
             --build-arg=FLAVOR=${{ matrix.flavor }} \
             --build-arg=VERSION=${{ matrix.version }} \
