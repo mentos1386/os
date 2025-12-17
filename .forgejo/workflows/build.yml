@@ -101,14 +101,14 @@ jobs:
             --build-arg=VERSION=${{ matrix.version }} \
             --file Containerfile \
             --tag ${{ env.IMAGE_NAME }} \
-            --label ${{ steps.metadata.outputs.labels }}
+            --label ${{ join(steps.metadata.outputs.labels, ',') }}
 
           devbox run -- buildah build \
             --build-arg=FLAVOR=${{ matrix.flavor }} \
             --build-arg=VERSION=${{ matrix.version }} \
             --file Containerfile \
             --tag ${{ env.IMAGE_NAME }} \
-            --label ${{ steps.metadata.outputs.labels }}
+            --label ${{ join(steps.metadata.outputs.labels, ',') }}
 
       - name: Push image
         id: push
