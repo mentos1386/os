@@ -25,7 +25,7 @@ jobs:
       fail-fast: false
       matrix:
         flavor: [bazzite-deck-gnome, bazzite-gnome]
-        version: [42, 43]
+        version: [42, testing-43]
 
     env:
       IMAGE_NAME: "os-${{ matrix.flavor }}"
@@ -55,14 +55,14 @@ jobs:
           echo '{ "default": [{ "type": "insecureAcceptAnything" }] }' > /root/.config/containers/policy.json
 
           devbox run -- buildah build \
-            --file Containerfile \
             --build-arg FLAVOR=${{ matrix.flavor }} \
             --build-arg VERSION=${{ matrix.version }} \
-            --tag ${{ env.IMAGE_NAME }} \
             --label "org.opencontainers.image.created=$(date -u +%Y\-%m\-%d\T%H\:%M\:%S\Z)" \
-            --label "org.opencontainers.image.version=${{ github.ref_name }}" \
+            --label "org.opencontainers.image.version=${{ matrix.version }}-${{ github.ref_name }}" \
             --label "org.opencontainers.image.revision=${{ github.sha }}" \
-            --label "org.opencontainers.image.title=${{ env.IMAGE_NAME }}"
+            --label "org.opencontainers.image.title=${{ env.IMAGE_NAME }}" \
+            --tag ${{ env.IMAGE_NAME }} \
+            .
 
       - name: Push image
         if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
@@ -75,7 +75,7 @@ jobs:
           echo "- Pushing image"
           devbox run -- buildah push raw-image-os docker://${IMAGE}:${{ github.sha }}
 
-          for tag in latest latest.$(date -u +%Y\%m\%d) $(date -u +%Y\%m\%d) ${{ github.ref_name }}; do
+          for tag in latest latest.$(date -u +%Y\%m\%d) latest.${{ matrix.version }} $(date -u +%Y\%m\%d) ${{ github.ref_name }}; do
             echo "- Copying to ${tag}"
             devbox run -- skopeo copy docker://${IMAGE}:${{ github.sha }} docker://${IMAGE}:${tag}
           done
@@ -85,7 +85,7 @@ jobs:
         run: |
           IMAGE_FULL="${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}"
 
-          for tag in latest latest.$(date -u +%Y\%m\%d) $(date -u +%Y\%m\%d) ${{ github.ref_name }} ${{ github.sha }}; do
+          for tag in latest latest.$(date -u +%Y\%m\%d) latest.${{ matrix.version }} $(date -u +%Y\%m\%d) ${{ github.ref_name }} ${{ github.sha }}; do
             devbox run -- cosign sign -y --key env://COSIGN_PRIVATE_KEY $IMAGE_FULL:$tag
           done
         env:
