@@ -51,8 +51,8 @@ jobs:
       - name: Build Image
         run: |
           devbox run -- buildah build \
-            --build-arg=FLAVOR=${{ matrix.flavor }} \
-            --build-arg=VERSION=${{ matrix.version }} \
+            --build-arg FLAVOR=${{ matrix.flavor }} \
+            --build-arg VERSION=${{ matrix.version }} \
             --file Containerfile \
             --tag ${{ env.IMAGE_NAME }} \
             --label "org.opencontainers.image.created=$(date -u +%Y\-%m\-%d\T%H\:%M\:%S\Z)" \
