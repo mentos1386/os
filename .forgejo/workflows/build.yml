@@ -51,10 +51,11 @@ jobs:
       - name: Build Image
         run: |
           set -x
+          sudo podman image trust set --type accept default
           devbox run -- buildah build \
+            --file Containerfile \
             --build-arg FLAVOR=${{ matrix.flavor }} \
             --build-arg VERSION=${{ matrix.version }} \
-            --file Containerfile \
             --tag ${{ env.IMAGE_NAME }} \
             --label "org.opencontainers.image.created=$(date -u +%Y\-%m\-%d\T%H\:%M\:%S\Z)" \
             --label "org.opencontainers.image.version=${{ github.ref_name }}" \
