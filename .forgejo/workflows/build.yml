@@ -50,7 +50,6 @@ jobs:
 
       - name: Build Image
         run: |
-          set -x
           mkdir -p /root/.config/containers
           echo '{ "default": [{ "type": "insecureAcceptAnything" }] }' > /root/.config/containers/policy.json
 

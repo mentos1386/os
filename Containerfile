@@ -8,16 +8,15 @@ COPY build_files /
 # Base Image
 FROM ghcr.io/ublue-os/${FLAVOR}:${VERSION}
 
-
 ### MODIFICATIONS
 ## make modifications desired in your image and install packages by modifying the build.sh script
 ## the following RUN directive does all the things required to run "build.sh" as recommended.
-
-RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
+RUN mkdir -p /tmp/ctx
+RUN --mount=type=bind,from=ctx,source=/,target=/tmp/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
-    /ctx/build.sh && \
+    /tmp/ctx/build.sh && \
     ostree container commit
 
 ### LINTING
