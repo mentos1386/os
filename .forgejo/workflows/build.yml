@@ -50,6 +50,7 @@ jobs:
 
       - name: Build Image
         run: |
+          set -x
           devbox run -- buildah build \
             --build-arg FLAVOR=${{ matrix.flavor }} \
             --build-arg VERSION=${{ matrix.version }} \
