@@ -15,34 +15,34 @@ dnf5 -y install dnf5-plugins
 
 # Base
 PACKAGES=(
-    git
-    git-lfs
-    zsh
-    curl
-    htop
-    wget
+  git
+  git-lfs
+  zsh
+  curl
+  htop
+  wget
 )
 
 # Photography
 PACKAGES+=(
-    gphoto2
-    v4l2loopback
-    ffmpeg
-    ddcutil
+  gphoto2
+  #v4l2loopback
+  ffmpeg
+  ddcutil
 )
 
 # Tools
 PACKAGES+=(
-    kitty
+  kitty
 )
 
 # Docker
 PACKAGES+=(
-    containerd.io
-    docker-buildx-plugin
-    docker-ce
-    docker-ce-cli
-    docker-compose-plugin
+  containerd.io
+  docker-buildx-plugin
+  docker-ce
+  docker-ce-cli
+  docker-compose-plugin
 )
 
 dnf5 install -y "${PACKAGES[@]}"
