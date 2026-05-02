@@ -25,7 +25,7 @@ jobs:
       fail-fast: false
       matrix:
         flavor: [bazzite-deck-gnome, bazzite-gnome]
-        version: [42, testing-43]
+        version: [44]
 
     env:
       IMAGE_NAME: "os-${{ matrix.flavor }}"
