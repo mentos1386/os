@@ -24,7 +24,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        flavor: [bazzite-deck-gnome, bazzite-gnome]
+        #flavor: [bazzite-deck-gnome, bazzite-gnome]
+        flavor: [bazzite-gnome]
         version: [44]
 
     env:
