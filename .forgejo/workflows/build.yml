@@ -19,7 +19,7 @@ concurrency:
 
 jobs:
   build_push:
-    runs-on: ubuntu-latest
+    runs-on: nix-latest
     name: Build and push image
     strategy:
       fail-fast: false
@@ -41,20 +41,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v4
 
-      - name: Install devbox
-        uses: jetify-com/devbox-install-action@961cad8246f221a1c5f0ecf481fbbf58ee9a1ceb # v0.14.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.NIX_GITHUB_TOKEN }}
-        with:
-          enable-cache: true
-          github-token: "${{ secrets.NIX_GITHUB_TOKEN }}"
-
       - name: Build Image
         run: |
           mkdir -p /root/.config/containers
           echo '{ "default": [{ "type": "insecureAcceptAnything" }] }' > /root/.config/containers/policy.json
 
-          devbox run -- buildah build \
+          nix develop --command buildah build \
             --build-arg FLAVOR=${{ matrix.flavor }} \
             --build-arg VERSION=${{ matrix.version }} \
             --label "org.opencontainers.image.created=$(date -u +%Y\-%m\-%d\T%H\:%M\:%S\Z)" \
@@ -73,11 +65,11 @@ jobs:
           IMAGE="${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}"
 
           echo "- Pushing image"
-          devbox run -- buildah push raw-image-os docker://${IMAGE}:${{ github.sha }}
+          nix develop --command buildah push raw-image-os docker://${IMAGE}:${{ github.sha }}
 
           for tag in latest latest.$(date -u +%Y\%m\%d) latest.${{ matrix.version }} $(date -u +%Y\%m\%d) ${{ github.ref_name }}; do
             echo "- Copying to ${tag}"
-            devbox run -- skopeo copy docker://${IMAGE}:${{ github.sha }} docker://${IMAGE}:${tag}
+            nix develop --command skopeo copy docker://${IMAGE}:${{ github.sha }} docker://${IMAGE}:${tag}
           done
 
       - name: Sign container image
@@ -86,7 +78,7 @@ jobs:
           IMAGE_FULL="${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}"
 
           for tag in latest latest.$(date -u +%Y\%m\%d) latest.${{ matrix.version }} $(date -u +%Y\%m\%d) ${{ github.ref_name }} ${{ github.sha }}; do
-            devbox run -- cosign sign -y --key env://COSIGN_PRIVATE_KEY $IMAGE_FULL:$tag
+            nix develop --command cosign sign -y --key env://COSIGN_PRIVATE_KEY $IMAGE_FULL:$tag
           done
         env:
           COSIGN_EXPERIMENTAL: false
