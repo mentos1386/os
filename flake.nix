@@ -24,6 +24,7 @@
             skopeo
             cosign
             docker
+            podman
           ];
         };
       }

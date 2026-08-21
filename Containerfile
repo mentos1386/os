@@ -9,16 +9,6 @@ RUN --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
 <<EOF
-  # Docker Repo
-  tee /etc/yum.repos.d/docker-ce.repo <<EOD
-  [docker-ce-stable]
-  name=Docker CE Stable - \$basearch
-  baseurl=https://download.docker.com/linux/fedora/\$releasever/\$basearch/stable
-  enabled=1
-  gpgcheck=1
-  gpgkey=https://download.docker.com/linux/fedora/gpg
-  EOD
-
   dnf5 -y install dnf5-plugins
 
   # Base
@@ -42,15 +32,6 @@ RUN --mount=type=cache,dst=/var/cache \
   # Tools
   PACKAGES+=(
     kitty
-  )
-
-  # Docker
-  PACKAGES+=(
-    containerd.io
-    docker-buildx-plugin
-    docker-ce
-    docker-ce-cli
-    docker-compose-plugin
   )
 
   dnf5 install -y "${PACKAGES[@]}"
