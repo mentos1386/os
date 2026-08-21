@@ -46,7 +46,7 @@ jobs:
           mkdir -p /root/.config/containers
           echo '{ "default": [{ "type": "insecureAcceptAnything" }] }' > /root/.config/containers/policy.json
 
-          nix develop --command buildah build \
+          nix develop --command docker build \
             --build-arg FLAVOR=${{ matrix.flavor }} \
             --build-arg VERSION=${{ matrix.version }} \
             --label "org.opencontainers.image.created=$(date -u +%Y\-%m\-%d\T%H\:%M\:%S\Z)" \
@@ -59,13 +59,13 @@ jobs:
       - name: Push image
         if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
         run: |
-          echo "${{ secrets.PACKAGES_TOKEN }}" | devbox run -- buildah login -u ${{ github.actor }} --password-stdin
-          echo "${{ secrets.PACKAGES_TOKEN }}" | devbox run -- skopeo login -u ${{ github.actor }} --password-stdin
+          echo "${{ secrets.PACKAGES_TOKEN }}" | devbox run -- docker login -u mentos1386 --password-stdin
+          echo "${{ secrets.PACKAGES_TOKEN }}" | devbox run -- skopeo login -u mentos1386 --password-stdin
 
           IMAGE="${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}"
 
           echo "- Pushing image"
-          nix develop --command buildah push raw-image-os docker://${IMAGE}:${{ github.sha }}
+          nix develop --command docker push ${IMAGE}:${{ github.sha }}
 
           for tag in latest latest.$(date -u +%Y\%m\%d) latest.${{ matrix.version }} $(date -u +%Y\%m\%d) ${{ github.ref_name }}; do
             echo "- Copying to ${tag}"

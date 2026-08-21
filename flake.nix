@@ -23,6 +23,7 @@
             buildah
             skopeo
             cosign
+            docker
           ];
         };
       }
