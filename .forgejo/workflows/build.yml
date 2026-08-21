@@ -54,6 +54,7 @@ jobs:
             --label "org.opencontainers.image.revision=${{ github.sha }}" \
             --label "org.opencontainers.image.title=${{ env.IMAGE_NAME }}" \
             --tag ${{ env.IMAGE_NAME }} \
+            --file Containerfile \
             .
 
       - name: Push image
