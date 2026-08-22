@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1.25
 ARG FLAVOR=bazzite-gnome
 ARG VERSION=stable-44
 
