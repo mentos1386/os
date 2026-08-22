@@ -1,39 +1,20 @@
-# syntax=docker/dockerfile:1.25
 ARG FLAVOR=bazzite-gnome
 ARG VERSION=stable-44
+
+# Allow build scripts to be referenced without being copied into the final image
+FROM scratch AS ctx
+COPY build_files /
+COPY system_files /system_files
 
 # Base Image
 FROM ghcr.io/ublue-os/${FLAVOR}:${VERSION}
 
 ### MODIFICATIONS
-RUN --mount=type=cache,dst=/var/cache --mount=type=cache,dst=/var/log --mount=type=tmpfs,dst=/tmp <<EOF
-dnf5 -y install dnf5-plugins
-
-# Base
-PACKAGES=(
-  git
-  git-lfs
-  zsh
-  curl
-  htop
-  wget
-)
-
-# Photography
-PACKAGES+=(
-  gphoto2
-  #v4l2loopback
-  ffmpeg
-  ddcutil
-)
-
-# Tools
-PACKAGES+=(
-  kitty
-)
-
-dnf5 install -y "${PACKAGES[@]}"
-EOF
+RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
+    --mount=type=cache,dst=/var/cache \
+    --mount=type=cache,dst=/var/log \
+    --mount=type=tmpfs,dst=/tmp \
+    /ctx/build.sh
 
 # Create empty folder to prepare for Nix install.
 # Ref: https://github.com/DeterminateSystems/nix-installer/issues/1445#issuecomment-2816777981
