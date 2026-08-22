@@ -79,8 +79,8 @@ jobs:
         run: |
           IMAGE_FULL="${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}"
 
-          for tag in latest latest.$(date -u +%Y\%m\%d) latest.${{ matrix.version }} $(date -u +%Y\%m\%d) ${{ github.ref_name }} ${{ github.sha }}; do
-            nix develop --command cosign sign -y --key env://COSIGN_PRIVATE_KEY $IMAGE_FULL:$tag
+          for tag in latest $(date -u +%Y\%m\%d) ${{ github.ref_name }} ${{ github.sha }}; do
+            nix develop --command cosign sign -y --key env://COSIGN_PRIVATE_KEY $IMAGE_FULL:${{ matrix.version }}.$tag
           done
         env:
           COSIGN_EXPERIMENTAL: false

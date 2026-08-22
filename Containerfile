@@ -9,32 +9,32 @@ RUN --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
 <<EOF
-  dnf5 -y install dnf5-plugins
+dnf5 -y install dnf5-plugins
 
-  # Base
-  PACKAGES=(
-    git
-    git-lfs
-    zsh
-    curl
-    htop
-    wget
-  )
+# Base
+PACKAGES=(
+  git
+  git-lfs
+  zsh
+  curl
+  htop
+  wget
+)
 
-  # Photography
-  PACKAGES+=(
-    gphoto2
-    #v4l2loopback
-    ffmpeg
-    ddcutil
-  )
+# Photography
+PACKAGES+=(
+  gphoto2
+  #v4l2loopback
+  ffmpeg
+  ddcutil
+)
 
-  # Tools
-  PACKAGES+=(
-    kitty
-  )
+# Tools
+PACKAGES+=(
+  kitty
+)
 
-  dnf5 install -y "${PACKAGES[@]}"
+dnf5 install -y "${PACKAGES[@]}"
 EOF
 
 # Create empty folder to prepare for Nix install.
