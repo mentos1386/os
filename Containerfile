@@ -5,10 +5,7 @@ ARG VERSION=stable-44
 FROM ghcr.io/ublue-os/${FLAVOR}:${VERSION}
 
 ### MODIFICATIONS
-RUN --mount=type=cache,dst=/var/cache \
-    --mount=type=cache,dst=/var/log \
-    --mount=type=tmpfs,dst=/tmp \
-<<EOF
+RUN --mount=type=cache,dst=/var/cache --mount=type=cache,dst=/var/log --mount=type=tmpfs,dst=/tmp <<EOF
 dnf5 -y install dnf5-plugins
 
 # Base
@@ -39,7 +36,7 @@ EOF
 
 # Create empty folder to prepare for Nix install.
 # Ref: https://github.com/DeterminateSystems/nix-installer/issues/1445#issuecomment-2816777981
- RUN mkdir /nix
+RUN mkdir /nix
 
 ### LINTING
 ## Verify final image and contents are correct.
