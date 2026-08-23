@@ -43,13 +43,6 @@ jobs:
 
       - name: Build Image
         run: |
-          nix develop --command docker info
-          nix develop --command podman info
-          nix develop --command buildah info
-          df -h
-          mount
-          lsblk
-
           nix develop --command podman build \
             --build-arg FLAVOR=${{ matrix.flavor }} \
             --build-arg VERSION=${{ matrix.version }} \
