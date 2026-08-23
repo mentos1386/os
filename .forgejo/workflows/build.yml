@@ -52,7 +52,8 @@ jobs:
             --label "org.opencontainers.image.title=${{ env.IMAGE_NAME }}" \
             --tag ${{ env.IMAGE_NAME }} \
             --file Containerfile \
-            .
+            . || df -h
+          exit 1
 
       - name: Push image
         if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
