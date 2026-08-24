@@ -35,10 +35,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v4
 
-      - run: |
-          env | grep PATH
-          export PATH=/bin:/sbin:/usr/bin:/usr/sbin:${PATH}
-          /prepare.sh
+      - run: /prepare.sh
 
       - name: Restore and save Nix store
         uses: nix-community/cache-nix-action@7df957e333c1e5da7721f60227dbba6d06080569 # v7
