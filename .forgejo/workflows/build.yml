@@ -59,7 +59,7 @@ jobs:
             .
 
       - name: Push image
-        if: forgejo.event_name != 'pull_request' && forgejo.ref_name == 'main'
+        if: ${{ forgejo.event_name != 'pull_request' && forgejo.ref_name == 'main' }}
         run: |
           echo "${{ secrets.PACKAGES_TOKEN }}" | nix develop --command podman login -u mentos1386 --password-stdin code.tjo.space
           echo "${{ secrets.PACKAGES_TOKEN }}" | nix develop --command cosign login -u mentos1386 --password-stdin code.tjo.space
