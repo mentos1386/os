@@ -54,7 +54,7 @@ jobs:
             --label "org.opencontainers.image.version=${{ matrix.version }}-${{ github.ref_name }}" \
             --label "org.opencontainers.image.revision=${{ github.sha }}" \
             --label "org.opencontainers.image.title=${{ env.IMAGE_NAME }}" \
-            --tag ${{ env.IMAGE }} \
+            --tag "${IMAGE}" \
             --file Containerfile \
             .
 
@@ -69,7 +69,7 @@ jobs:
             echo "- Pusing ${tag}"
             nix develop --command podman push ${IMAGE} ${IMAGE}:${tag}
             echo "- Signing ${tag}"
-            nix develop --command cosign sign -y --key env://COSIGN_PRIVATE_KEY $IMAGE_FULL:${{ matrix.version }}.$tag
+            nix develop --command cosign sign -y --key env://COSIGN_PRIVATE_KEY ${IMAGE}:${tag}
           done
         env:
           COSIGN_EXPERIMENTAL: false
