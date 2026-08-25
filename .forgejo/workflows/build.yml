@@ -45,6 +45,7 @@ jobs:
 
       - name: Build Image
         run: |
+          env | grep ACTIONS_CACHE_URL
           nix develop --command podman build \
             --build-arg FLAVOR=${{ matrix.flavor }} \
             --build-arg VERSION=${{ matrix.version }} \
@@ -59,8 +60,8 @@ jobs:
       - name: Push image
         if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
         run: |
-          echo "${{ secrets.PACKAGES_TOKEN }}" | devbox run -- podman login -u mentos1386 --password-stdin
-          echo "${{ secrets.PACKAGES_TOKEN }}" | devbox run -- skopeo login -u mentos1386 --password-stdin
+          echo "${{ secrets.PACKAGES_TOKEN }}" | nix develop --command podman login -u mentos1386 --password-stdin
+          echo "${{ secrets.PACKAGES_TOKEN }}" | nix develop --command skopeo login -u mentos1386 --password-stdin
 
           IMAGE="${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}"
 
