@@ -14,7 +14,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref || github.run_id }}
+  group: ${{ forgejo.workflow }}-${{ forgejo.ref || forgejo.run_id }}
   cancel-in-progress: true
 
 jobs:
@@ -51,8 +51,8 @@ jobs:
             --build-arg FLAVOR=${{ matrix.flavor }} \
             --build-arg VERSION=${{ matrix.version }} \
             --label "org.opencontainers.image.created=$(date -u +%Y\-%m\-%d\T%H\:%M\:%S\Z)" \
-            --label "org.opencontainers.image.version=${{ matrix.version }}-${{ github.ref_name }}" \
-            --label "org.opencontainers.image.revision=${{ github.sha }}" \
+            --label "org.opencontainers.image.version=${{ matrix.version }}-${{ forgejo.ref_name }}" \
+            --label "org.opencontainers.image.revision=${{ forgejo.sha }}" \
             --label "org.opencontainers.image.title=${{ env.IMAGE_NAME }}" \
             --tag "${IMAGE}" \
             --file Containerfile \
