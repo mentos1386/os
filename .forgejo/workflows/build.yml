@@ -28,8 +28,8 @@ jobs:
         version: [stable-43, stable-44]
 
     env:
-      IMAGE_NAME: "os-${{ matrix.flavor }}"
-      IMAGE_REGISTRY: "code.tjo.space/mentos1386"
+      IMAGE_NAME: "${{ matrix.flavor }}"
+      IMAGE_REGISTRY: "code.tjo.space/mentos1386/os"
 
     steps:
       - name: Checkout
@@ -64,10 +64,11 @@ jobs:
           echo "${{ secrets.PACKAGES_TOKEN }}" | nix develop --command podman login -u mentos1386 --password-stdin
 
           IMAGE="${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}"
+          nix develop --command podman image ls
 
           for tag in latest ${{ matrix.version }} $(date -u +%Y\%m\%d) ${{ github.ref_name }} ${{ github.sha }}; do
             echo "- Pusing ${tag}"
-            nix develop --command podman push ${IMAGE} ${IMAGE}:${tag}
+            nix develop --command podman push ${IMAGE}:latest ${IMAGE}:${tag}
             echo "- Signing ${tag}"
             nix develop --command cosign sign -y --key env://COSIGN_PRIVATE_KEY ${IMAGE}:${tag}
           done
