@@ -65,13 +65,15 @@ jobs:
           echo "${{ secrets.PACKAGES_TOKEN }}" | nix develop --command cosign login -u mentos1386 --password-stdin code.tjo.space
 
           IMAGE="${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}"
+          DIGEST=$(podman image inspect --format '{{ .Digest }}' ${IMAGE}:latest)
 
-          for tag in latest ${{ matrix.version }} $(date -u +%Y\%m\%d) ${{ forgejo.ref_name }} ${{ forgejo.sha }}; do
-            echo "- Pusing ${tag}"
-            nix develop --command podman push ${IMAGE}:latest ${IMAGE}:${tag}
-            echo "- Signing ${tag}"
-            nix develop --command cosign sign -y --key env://COSIGN_PRIVATE_KEY ${IMAGE}:${tag}
+          for TAG in "${{ matrix.version }}" "${{ matrix.version }}.$(date -u +%Y\%m\%d)" "${{ matrix.version }}.${{ forgejo.sha }}"; do
+            echo "Pushing ${TAG}..."
+            nix develop --command podman push ${IMAGE}:latest ${IMAGE}:${TAG}
           done
+
+          echo "Sigining..."
+          nix develop --command cosign sign -y --key env://COSIGN_PRIVATE_KEY ${IMAGE}@${DIGEST}
         env:
           COSIGN_EXPERIMENTAL: false
           COSIGN_PRIVATE_KEY: ${{ secrets.SIGNING_SECRET }}
