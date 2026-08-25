@@ -71,9 +71,3 @@ jobs:
             echo "Pushing ${TAG}..."
             nix develop --command podman push ${IMAGE}:latest ${IMAGE}:${TAG}
           done
-
-          echo "Sigining..."
-          nix develop --command cosign sign -y --key env://COSIGN_PRIVATE_KEY ${IMAGE}@${DIGEST}
-        env:
-          COSIGN_EXPERIMENTAL: false
-          COSIGN_PRIVATE_KEY: ${{ secrets.SIGNING_SECRET }}
