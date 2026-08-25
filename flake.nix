@@ -20,10 +20,7 @@
       rec {
         devShells.default = pkgs.mkShellNoCC {
           packages = with pkgs; [
-            buildah
-            skopeo
             cosign
-            docker
             podman
           ];
         };
